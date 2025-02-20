@@ -1,0 +1,81 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: my-eck-cluster
+spec:
+  version: 8.6.0
+  nodeSets:
+    - name: hot-nodes
+      count: 1
+      config:
+        node.roles: ["data_hot", "ingest", "master"]
+        node.store.allow_mmap: false
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 1.5Gi
+                  cpu: 1
+                limits:
+                  memory: 2Gi
+                  cpu: 2
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+
+    - name: warm-nodes
+      count: 1
+      config:
+        node.roles: ["data_warm"]
+        node.store.allow_mmap: false
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 500Mi
+                  cpu: 0.5
+                limits:
+                  memory: 1Gi
+                  cpu: 1
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 5Gi
+
+    - name: cold-nodes
+      count: 1
+      config:
+        node.roles: ["data_cold"]
+        node.store.allow_mmap: false
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 500Mi
+                  cpu: 0.5
+                limits:
+                  memory: 1Gi
+                  cpu: 1
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 5Gi
