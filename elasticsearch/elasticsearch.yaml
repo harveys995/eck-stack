@@ -4,7 +4,7 @@ metadata:
   name: siem
   namespace: eck-stack
 spec:
-  version: 8.6.0
+  version: 8.17.1
   nodeSets:
     - name: hot-nodes
       count: 1

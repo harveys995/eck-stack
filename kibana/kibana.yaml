@@ -1,0 +1,54 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: siem
+  namespace: eck-stack
+spec:
+  version: 8.17.1
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true # Disable TLS for local Minikube testing
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch # Assuming your local Minikube Elasticsearch is named 'elasticsearch'
+  config:
+    server.publicBaseUrl: http://kibana.local:5601 # Change to your local Minikube access
+    xpack.fleet.registryUrl: https://epr.elastic.co # Use Elastic’s package registry
+    xpack.fleet.agents.elasticsearch.hosts:
+      ["http://elasticsearch-es-http:9200"]
+    xpack.fleet.agents.fleet_server.hosts: ["http://fleet-server-http:8220"]
+    xpack.fleet.isAirGapped: false # You now have internet access
+    xpack.fleet.packages:
+      - name: system
+        version: latest
+      - name: elastic_agent
+        version: latest
+      - name: fleet_server
+        version: latest
+      - name: log
+        version: latest
+    xpack.fleet.agentPolicies:
+      - name: Fleet Server on Minikube
+        id: minikube-fleet-server
+        namespace: fleetserver
+        monitoring_enabled:
+          - logs
+          - metrics
+        unenroll_timeout: 900
+        package_policies:
+          - name: fleet_server-1
+            id: fleet_server-1
+            package:
+              name: fleet_server
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: 2
+            limits:
+              memory: 4Gi
+              cpu: 4
