@@ -7,7 +7,7 @@ spec:
   version: 8.17.1
   nodeSets:
     - name: hot-nodes
-      count: 2
+      count: 1
       config:
         node.roles: ["data_hot", "ingest", "master"]
         node.store.allow_mmap: false
@@ -17,10 +17,10 @@ spec:
             - name: elasticsearch
               resources:
                 requests:
-                  memory: 1.5Gi
+                  memory: 1Gi
                   cpu: 1
                 limits:
-                  memory: 2Gi
+                  memory: 1.5Gi
                   cpu: 2
       volumeClaimTemplates:
         - metadata:
@@ -29,4 +29,4 @@ spec:
             accessModes: ["ReadWriteOnce"]
             resources:
               requests:
-                storage: 10Gi
+                storage: 15Gi
