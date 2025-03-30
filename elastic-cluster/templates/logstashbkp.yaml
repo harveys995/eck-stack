@@ -1,0 +1,71 @@
+apiVersion: logstash.k8s.elastic.co/v1alpha1
+kind: Logstash
+metadata:
+  name: logstash
+  namespace: eck-stack
+spec:
+  version: 8.17.2
+  count: 1
+  elasticsearchRefs:
+    - name: siem
+      clusterName: siem
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+        - name: monitoring-cluster-es
+    logs:
+      elasticsearchRefs:
+        - name: monitoring-cluster-es
+  podTemplate:
+    spec:
+      containers:
+        - name: logstash
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: 1
+            requests:
+              memory: 2Gi
+              cpu: 1
+          env:
+            - name: LS_JAVA_OPTS
+              value: "-Xms2g -Xmx2g" # Increase memory allocation for Logstash
+            - name: LS_XPACK_MONITORING_ENABLED
+              value: "true"
+            - name: LS_XPACK_MONITORING_ELASTICSEARCH_HOSTS
+              value: "https://monitoring-cluster-es-es-http.eck-stack.svc:9200"
+            - name: LS_XPACK_MONITORING_ELASTICSEARCH_USERNAME
+              value: "elastic"
+            - name: LS_XPACK_MONITORING_ELASTICSEARCH_PASSWORD
+              value: "C2J2W4kM3vBp88034qDCR0qQ"
+            - name: LS_XPACK_MONITORING_ELASTICSEARCH_SSL_VERIFICATION_MODE
+              value: "none"
+  pipelines:
+    - pipeline.id: "main"
+      config.string: |
+        input {
+          file {
+            path => "/usr/share/logstash/data/input.log"  # Path to your file
+            start_position => "beginning"  # Read from the beginning
+            sincedb_path => "/dev/null"  # Don't store file state
+            codec => "json"  # If your file contains JSON, use this codec
+          }
+        }
+        filter {
+          mutate {
+            add_field => { "message" => "%{[message]}" }  # Add message field for testing
+          }
+        }
+        output {
+          elasticsearch {
+            hosts => ["https://siem-es-internal-http.eck-stack.svc:9200"]
+            user => "elastic"
+            password => "BB4dWsKvf9S8VZ219g0k1T12"
+            ssl_certificate_verification => false
+            data_stream => "true"
+            data_stream_type => "logs"
+            data_stream_dataset => "data_stream"
+            data_stream_namespace => "test"
+          }
+          stdout { codec => rubydebug }
+        }

@@ -1,0 +1,28 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+  namespace: eck-stack
+spec:
+  version: 8.17.2
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+        - name: monitoring-cluster-es
+    logs:
+      elasticsearchRefs:
+        - name: monitoring-cluster-es
+  count: 1
+  elasticsearchRef:
+    name: siem
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 1
+            limits:
+              memory: 1Gi
+              cpu: 1

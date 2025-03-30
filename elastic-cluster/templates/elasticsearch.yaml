@@ -4,12 +4,18 @@ metadata:
   name: siem
   namespace: eck-stack
 spec:
-  version: 8.17.1
+  version: 8.17.2
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+        - name: monitoring-cluster-es
+    logs:
+      elasticsearchRefs:
+        - name: monitoring-cluster-es
   nodeSets:
     - name: hot-nodes
       count: 1
       config:
-        node.roles: ["data_hot", "ingest", "master"]
         node.store.allow_mmap: false
       podTemplate:
         spec:
@@ -20,8 +26,8 @@ spec:
                   memory: 1Gi
                   cpu: 1
                 limits:
-                  memory: 1.5Gi
-                  cpu: 2
+                  memory: 1Gi
+                  cpu: 1
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
@@ -29,4 +35,4 @@ spec:
             accessModes: ["ReadWriteOnce"]
             resources:
               requests:
-                storage: 15Gi
+                storage: 20Gi
