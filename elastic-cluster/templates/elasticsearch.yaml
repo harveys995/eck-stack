@@ -14,7 +14,7 @@ spec:
   #       - name: monitoring-cluster-es
   nodeSets:
     - name: hot-nodes
-      count: 2
+      count: 1
       config:
         node.store.allow_mmap: false
       podTemplate:
