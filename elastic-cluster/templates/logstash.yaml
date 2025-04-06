@@ -44,7 +44,7 @@ spec:
             - name: LS_XPACK_MONITORING_ELASTICSEARCH_USERNAME
               value: "elastic"
             - name: LS_XPACK_MONITORING_ELASTICSEARCH_PASSWORD
-              value: "C2J2W4kM3vBp88034qDCR0qQ"
+              value: "spTXT325875yu52AQ8cjA4Uo"
             - name: LS_XPACK_MONITORING_ELASTICSEARCH_SSL_CERTIFICATE_AUTHORITY
               value: "/usr/share/logstash/config/certs/ca.crt"
             - name: LS_XPACK_MONITORING_ELASTICSEARCH_SSL_VERIFICATION_MODE
