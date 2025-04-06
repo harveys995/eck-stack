@@ -1,8 +1,21 @@
-project: default
-source:
-  repoURL: https://github.com/harveys995/eck-stack
-  path: elastic-cluster
-  targetRevision: HEAD
-destination:
-  server: https://kubernetes.default.svc
-  namespace: eck-stack
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elastic-cluster-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/harveys995/eck-stack
+    path: elastic-cluster
+    targetRevision: HEAD
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: eck-stack
+
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
