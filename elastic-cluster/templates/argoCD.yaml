@@ -1,0 +1,8 @@
+project: default
+source:
+  repoURL: https://github.com/harveys995/eck-stack
+  path: elastic-cluster
+  targetRevision: HEAD
+destination:
+  server: https://kubernetes.default.svc
+  namespace: eck-stack
