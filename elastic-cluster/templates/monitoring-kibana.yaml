@@ -1,23 +1,23 @@
-apiVersion: kibana.k8s.elastic.co/v1
-kind: Kibana
-metadata:
-  name: monitoring-cluster-kibana
-  namespace: eck-stack
-spec:
-  version: 8.17.2
-  count: 1
-  elasticsearchRef:
-    name: monitoring-cluster-es
-  config:
-    elasticsearch.hosts: ["http://monitoring-cluster-es-es-http:9200"] # <-- Use HTTP instead of HTTPS
-  podTemplate:
-    spec:
-      containers:
-        - name: kibana
-          resources:
-            requests:
-              memory: 1Gi
-              cpu: 1
-            limits:
-              memory: 1Gi
-              cpu: 1
+# apiVersion: kibana.k8s.elastic.co/v1
+# kind: Kibana
+# metadata:
+#   name: monitoring-cluster-kibana
+#   namespace: eck-stack
+# spec:
+#   version: 8.17.2
+#   count: 1
+#   elasticsearchRef:
+#     name: monitoring-cluster-es
+#   config:
+#     elasticsearch.hosts: ["http://monitoring-cluster-es-es-http:9200"] # <-- Use HTTP instead of HTTPS
+#   podTemplate:
+#     spec:
+#       containers:
+#         - name: kibana
+#           resources:
+#             requests:
+#               memory: 1Gi
+#               cpu: 1
+#             limits:
+#               memory: 1Gi
+#               cpu: 1

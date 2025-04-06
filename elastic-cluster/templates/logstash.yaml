@@ -9,13 +9,13 @@ spec:
   elasticsearchRefs:
     - name: siem
       clusterName: siem
-  monitoring:
-    metrics:
-      elasticsearchRefs:
-        - name: monitoring-cluster-es
-    logs:
-      elasticsearchRefs:
-        - name: monitoring-cluster-es
+  # monitoring:
+  #   metrics:
+  #     elasticsearchRefs:
+  #       - name: monitoring-cluster-es
+  #   logs:
+  #     elasticsearchRefs:
+  #       - name: monitoring-cluster-es
   podTemplate:
     spec:
       volumes:
@@ -37,18 +37,18 @@ spec:
           env:
             - name: LS_JAVA_OPTS
               value: "-Xms2g -Xmx2g" # Increase memory allocation for Logstash
-            - name: LS_XPACK_MONITORING_ENABLED
-              value: "true"
-            - name: LS_XPACK_MONITORING_ELASTICSEARCH_HOSTS
-              value: "https://monitoring-cluster-es-es-http.eck-stack.svc:9200"
-            - name: LS_XPACK_MONITORING_ELASTICSEARCH_USERNAME
-              value: "elastic"
-            - name: LS_XPACK_MONITORING_ELASTICSEARCH_PASSWORD
-              value: "spTXT325875yu52AQ8cjA4Uo"
-            - name: LS_XPACK_MONITORING_ELASTICSEARCH_SSL_CERTIFICATE_AUTHORITY
-              value: "/usr/share/logstash/config/certs/ca.crt"
-            - name: LS_XPACK_MONITORING_ELASTICSEARCH_SSL_VERIFICATION_MODE
-              value: "full"
+            # - name: LS_XPACK_MONITORING_ENABLED
+            #   value: "true"
+            # - name: LS_XPACK_MONITORING_ELASTICSEARCH_HOSTS
+            #   value: "https://monitoring-cluster-es-es-http.eck-stack.svc:9200"
+            # - name: LS_XPACK_MONITORING_ELASTICSEARCH_USERNAME
+            #   value: "elastic"
+            # - name: LS_XPACK_MONITORING_ELASTICSEARCH_PASSWORD
+            #   value: "spTXT325875yu52AQ8cjA4Uo"
+            # - name: LS_XPACK_MONITORING_ELASTICSEARCH_SSL_CERTIFICATE_AUTHORITY
+            #   value: "/usr/share/logstash/config/certs/ca.crt"
+            # - name: LS_XPACK_MONITORING_ELASTICSEARCH_SSL_VERIFICATION_MODE
+            #   value: "full"
   pipelines:
     - pipeline.id: "main"
       config.string: |

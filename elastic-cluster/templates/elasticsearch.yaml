@@ -5,13 +5,13 @@ metadata:
   namespace: eck-stack
 spec:
   version: 8.17.2
-  monitoring:
-    metrics:
-      elasticsearchRefs:
-        - name: monitoring-cluster-es
-    logs:
-      elasticsearchRefs:
-        - name: monitoring-cluster-es
+  # monitoring:
+  #   metrics:
+  #     elasticsearchRefs:
+  #       - name: monitoring-cluster-es
+  #   logs:
+  #     elasticsearchRefs:
+  #       - name: monitoring-cluster-es
   nodeSets:
     - name: hot-nodes
       count: 1
