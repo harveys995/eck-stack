@@ -1,0 +1,8 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: { { .Values.clusterName } }
+  namespace: { { .Values.namespace } }
+spec:
+  version: { { .Values.version } }
+  nodeSets: { { - include "elastic-cluster.hotNodes" . | nindent 4 } }
