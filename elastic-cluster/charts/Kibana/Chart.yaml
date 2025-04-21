@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kibana
+description: Custom chart to deploy an Kibana CR with ECK
+version: 0.1.0

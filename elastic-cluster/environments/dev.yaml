@@ -1,0 +1,11 @@
+namespace: eck-stack
+
+elasticsearch:
+  clusterName: siem
+  count: 2
+  storage: 20Gi
+  version: 8.17.2
+
+kibana:
+  clusterName: siem
+  version: 8.17.2

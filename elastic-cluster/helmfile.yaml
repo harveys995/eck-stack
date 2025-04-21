@@ -1,0 +1,18 @@
+environments:
+  dev:
+    values:
+      - environments/dev.yaml
+
+---
+releases:
+  - name: elasticsearch
+    chart: ./charts/elasticsearch
+    namespace: {{ .Environment.Values.namespace }}
+    values:
+      - {{ toYaml .Environment.Values.elasticsearch | nindent 8 }}
+
+  - name: kibana
+    chart: ./charts/kibana
+    namespace: {{ .Environment.Values.namespace }}
+    values:
+      - {{ toYaml .Environment.Values.kibana | nindent 8 }}
