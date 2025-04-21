@@ -2,10 +2,10 @@ apiVersion: logstash.k8s.elastic.co/v1alpha1
 kind: Logstash
 metadata:
   name: logstash
-  namespace: eck-stack
+  namespace: {{ .Release.Namespace }}
 spec:
-  version: 8.17.2
-  count: 1
+  version: {{ .Values.version | quote }}
+  count: {{ .Values.count }}
   elasticsearchRefs:
     - name: siem
       clusterName: siem

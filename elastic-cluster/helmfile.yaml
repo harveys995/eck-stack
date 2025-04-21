@@ -8,11 +8,20 @@ releases:
   - name: elasticsearch
     chart: ./charts/elasticsearch
     namespace: {{ .Environment.Values.namespace }}
+    installed: {{ .Environment.Values.elasticsearch.enabled | default false }}
     values:
       - {{ toYaml .Environment.Values.elasticsearch | nindent 8 }}
 
   - name: kibana
     chart: ./charts/kibana
     namespace: {{ .Environment.Values.namespace }}
+    installed: {{ .Environment.Values.kibana.enabled | default false }}
     values:
       - {{ toYaml .Environment.Values.kibana | nindent 8 }}
+
+  - name: logstash
+    chart: ./charts/logstash
+    namespace: {{ .Environment.Values.namespace }}
+    installed: {{ .Environment.Values.logstash.enabled | default false }}
+    values:
+      - {{ toYaml .Environment.Values.logstash | nindent 8 }}
