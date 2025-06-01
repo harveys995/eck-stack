@@ -1,4 +1,0 @@
-apiVersion: v2
-name: logstash
-description: Custom chart to deploy an Logstash CR with ECK
-version: 0.1.0

@@ -1,4 +1,5 @@
 namespace: eck-stack
+dataingestion_namespace: data-layer
 
 elasticsearch:
   enabled: true
@@ -8,11 +9,12 @@ elasticsearch:
   version: 8.17.2
 
 kibana:
-  enabled: false
+  enabled: true
   clusterName: siem
   version: 8.17.2
 
 logstash:
-  enabled: false
-  count: 1
-  version: 8.17.2
+  enabled: true
+
+kafka:
+  enabled: true

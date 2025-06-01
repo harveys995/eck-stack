@@ -1,0 +1,4 @@
+apiVersion: v2
+name: dataingestion
+description: Custom chart to deploy a data ingestion pipeline
+version: 0.1.0

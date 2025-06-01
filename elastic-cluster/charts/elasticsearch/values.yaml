@@ -1,4 +1,4 @@
 clusterName: siem
-count: 2
+count: 1
 storage: 20Gi
 version: 8.17.2

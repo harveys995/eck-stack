@@ -1,0 +1,26 @@
+apiVersion: logstash.k8s.elastic.co/v1alpha1
+kind: Logstash
+metadata:
+  name: logstash
+  namespace: data-layer
+spec:
+  version: "8.12.2"
+  count: 1
+  podTemplate:
+    spec:
+      volumes:
+        - name: logstash-pipeline-settings
+          configMap:
+            name: logstash-pipeline-settings
+        - name: logstash-pipeline-library
+          configMap:
+            name: logstash-pipeline-library
+      containers:
+        - name: logstash
+          volumeMounts:
+            - name: logstash-pipeline-settings
+              mountPath: /usr/share/logstash/config/pipelines.yml
+              subPath: logstash-pipeline-settings.yml
+            - name: logstash-pipeline-library
+              mountPath: /usr/share/logstash/pipeline/network_firewall_cisco_aca.conf
+              subPath: network_firewall_cisco_aca.conf

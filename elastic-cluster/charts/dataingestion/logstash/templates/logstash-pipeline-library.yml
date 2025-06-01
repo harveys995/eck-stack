@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipeline-library
+  namespace: data-layer
+data:
+  network_firewall_cisco_aca.conf: |
+        input {
+          file {
+            path => "/usr/share/logstash/data/input.log"
+            start_position => "beginning"
+            sincedb_path => "/dev/null"
+            codec => json {
+            target => "bt" 
+            }
+            tags => ["network","firewall","cisco","asa"]
+          }
+        }
+        filter {
+        }
+        output {
+
+          kafka {
+            bootstrap_servers => "simple-kafka-broker-default-bootstrap.data-layer.svc:9092"
+            topic_id => "cisco-asa-topic"
+            codec => json
+          }
+          # elasticsearch {
+          #   hosts => ["https://siem-es-internal-http.eck-stack.svc:9200"]
+          #   ssl_verification_mode => "none"
+          #   api_key => "AmngIpcBSLZK3bQklDDm:q5sMfG2CSYezk2f50DCw-w"
+          #   ssl_enabled => true
+          #   data_stream => "true"
+          #   data_stream_type => "logs"
+          #   data_stream_dataset => "cisco_asa.log"
+          #   data_stream_namespace => "testing"
+          # }
+          stdout { codec => rubydebug }
+        }

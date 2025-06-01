@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipeline-settings
+  namespace: data-layer
+data:
+  logstash-pipeline-settings.yml: |
+    - pipeline.id: network_firewall_cisco_aca
+      path.config: "/usr/share/logstash/pipeline/network_firewall_cisco_aca.conf"
+      pipeline.workers: 1

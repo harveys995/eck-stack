@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kafka
+description: Custom chart to deploy an Elasticsearch CR with ECK
+version: 0.1.0

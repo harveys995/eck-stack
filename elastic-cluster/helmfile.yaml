@@ -18,10 +18,16 @@ releases:
     installed: {{ .Environment.Values.kibana.enabled | default false }}
     values:
       - {{ toYaml .Environment.Values.kibana | nindent 8 }}
-
   - name: logstash
-    chart: ./charts/logstash
-    namespace: {{ .Environment.Values.namespace }}
+    chart: ./charts/dataingestion/logstash
+    namespace: {{ .Environment.Values.dataingestion_namespace }}
     installed: {{ .Environment.Values.logstash.enabled | default false }}
     values:
       - {{ toYaml .Environment.Values.logstash | nindent 8 }}
+
+  - name: kafka
+    chart: ./charts/dataingestion/kafka
+    namespace: {{ .Environment.Values.dataingestion_namespace }}
+    installed: {{ .Environment.Values.kafka.enabled | default false }}
+    values:
+      - {{ toYaml .Environment.Values.kafka | nindent 8 }}

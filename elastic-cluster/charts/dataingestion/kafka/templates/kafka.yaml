@@ -1,0 +1,19 @@
+apiVersion: kafka.stackable.tech/v1alpha1
+kind: KafkaCluster
+metadata:
+  name: simple-kafka
+  namespace: data-layer
+spec:
+  image:
+    productVersion: 3.9.0
+  clusterConfig:
+    tls:
+      serverSecretClass: null
+    zookeeperConfigMapName: simple-kafka-znode
+  brokers:
+    config:
+      bootstrapListenerClass: internal
+      brokerListenerClass: internal
+    roleGroups:
+      default:
+        replicas: 3

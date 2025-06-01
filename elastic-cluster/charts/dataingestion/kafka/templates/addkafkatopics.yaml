@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-kafka-topics
+  namespace: data-layer
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: kafka-topic-init
+          image: oci.stackable.tech/sdp/kafka:3.9.0-stackable25.3.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Creating Kafka topics..."
+              /stackable/kafka_2.13-3.9.0/bin/kafka-topics.sh \
+                --bootstrap-server simple-kafka-broker-default-bootstrap:9092 \
+                --create --if-not-exists --topic cisco-asa-topic \
+                --partitions 3 --replication-factor 1
+
+              /stackable/kafka_2.13-3.9.0/bin/kafka-topics.sh \
+                --bootstrap-server simple-kafka-broker-default-bootstrap:9092 \
+                --create --if-not-exists --topic firewall-topic \
+                --partitions 2 --replication-factor 1
